@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema(
       required: [true, "A user must have an email address"],
       validate: [validator.isEmail, "Only valid emails are accepted"],
     },
+    password: {
+      type: String,
+      required: [true, "A user must have a password"],
+    },
     phoneNumber: {
       type: Number,
       required: [true, "A user must have a phone number"],
