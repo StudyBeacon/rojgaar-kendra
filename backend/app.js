@@ -3,8 +3,9 @@ const cookieParser = require("cookie-parser")
 const cors = require("cors")
 const morgan = require("morgan")
 
-const userRouter = require("./routes/userRoutes")
+// const userRouter = require("./routes/userRoutes")
 const globalErrorHandler = require("./controllers/errorController")
+const authController = require("./controllers/authController")
 
 const app = express()
 
@@ -30,7 +31,9 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 
-app.use("/", userRouter)
+// app.use("/", userRouter)
+app.post("/register", authController.register)
+app.post("/login", authController.login)
 
 app.use(globalErrorHandler)
 

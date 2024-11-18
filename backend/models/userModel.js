@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const validator = require("validator")
+const bcrypt = require("bcryptjs")
 
 const userSchema = new mongoose.Schema(
   {
@@ -16,7 +17,20 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "A user must have a password"],
+      required: [true, "Password can not be empty"],
+      minlength: [8, "Password must be atleast 8 characters or more"],
+      select: false,
+    },
+    passwordConfirm: {
+      type: String,
+      required: [true, "Please confirm your password"],
+      validate: {
+        validator: function (val) {
+          return val === this.password
+          // 'this' only points on CREATE and SAVE !!!
+        },
+        message: "Enter the same password",
+      },
     },
     phoneNumber: {
       type: Number,
@@ -50,6 +64,22 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 )
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next()
+
+  this.password = await bcrypt.hash(this.password, 12)
+  this.passwordConfirm = undefined
+
+  next()
+})
+
+userSchema.methods.correctPassword = async function (
+  plainPassword,
+  hashedPassword
+) {
+  return await bcrypt.compare(plainPassword, hashedPassword)
+}
 
 const User = mongoose.model("User", userSchema)
 
