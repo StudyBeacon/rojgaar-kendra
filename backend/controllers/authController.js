@@ -70,3 +70,49 @@ exports.login = catchAsync(async (req, res, next) => {
 
   signAndSendToken(user, 200, res)
 })
+
+exports.logout = catchAsync(async (req, res, next) => {
+  res
+    .status(200)
+    .cookie("jwt", "loggedout", {
+      expires: new Date(Date.now() + 10 * 1000),
+      httpOnly: true,
+    })
+    .json({
+      status: "success",
+      message: "Logged out successfully!",
+    })
+})
+
+exports.updateProfile = catchAsync(async (req, res, next) => {
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(new AppError("This route is not for password updates!", 400))
+  }
+
+  const { fullName, email, phoneNumber, bio, skills } = req.body
+  // const file = req.file
+
+  const skillsArray = skills.split(",")
+
+  const user = await User.findById(req.user._id) // from the middleware
+  if (!user) {
+    return next(new AppError("The user no longer exists", 401))
+  }
+
+  user.fullName = fullName
+  user.email = email
+  user.phoneNumber = phoneNumber
+  user.profile.bio = bio
+  user.profile.skills = skillsArray
+
+  await user.save({
+    validateModifiedOnly: true,
+  })
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user,
+    },
+  })
+})

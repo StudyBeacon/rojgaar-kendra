@@ -34,6 +34,8 @@ app.use(cors(corsOptions))
 // app.use("/", userRouter)
 app.post("/register", authController.register)
 app.post("/login", authController.login)
+app.post("/logout", authController.logout)
+app.patch("/updateMe", authController.updateProfile)
 
 app.use(globalErrorHandler)
 
