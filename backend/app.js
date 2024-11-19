@@ -3,9 +3,9 @@ const cookieParser = require("cookie-parser")
 const cors = require("cors")
 const morgan = require("morgan")
 
-// const userRouter = require("./routes/userRoutes")
+const userRouter = require("./routes/userRoutes")
+const companyRouter = require("./routes/companyRoutes")
 const globalErrorHandler = require("./controllers/errorController")
-const authController = require("./controllers/authController")
 
 const app = express()
 
@@ -26,17 +26,16 @@ app.use((req, res, next) => {
 })
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 }
 app.use(cors(corsOptions))
 
-// app.use("/", userRouter)
-app.post("/register", authController.register)
-app.post("/login", authController.login)
-app.post("/logout", authController.logout)
-app.patch("/updateMe", authController.updateProfile)
+// routes
+app.use("/api/v1/user", userRouter)
+app.use("/api/v1/company", companyRouter)
 
+// global error handler
 app.use(globalErrorHandler)
 
 module.exports = app

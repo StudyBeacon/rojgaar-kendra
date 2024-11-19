@@ -74,8 +74,8 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.logout = catchAsync(async (req, res, next) => {
   res
     .status(200)
-    .cookie("jwt", "loggedout", {
-      expires: new Date(Date.now() + 10 * 1000),
+    .cookie("jwt", "", {
+      expires: new Date(Date.now() - 1000),
       httpOnly: true,
     })
     .json({
@@ -92,18 +92,18 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   const { fullName, email, phoneNumber, bio, skills } = req.body
   // const file = req.file
 
-  const skillsArray = skills.split(",")
+  const skillsArray = skills?.split(",")
 
   const user = await User.findById(req.user._id) // from the middleware
   if (!user) {
     return next(new AppError("The user no longer exists", 401))
   }
 
-  user.fullName = fullName
-  user.email = email
-  user.phoneNumber = phoneNumber
-  user.profile.bio = bio
-  user.profile.skills = skillsArray
+  if (fullName) user.fullName = fullName
+  if (email) user.email = email
+  if (phoneNumber) user.phoneNumber = phoneNumber
+  if (bio) user.profile.bio = bio
+  if (skills) user.profile.skills = skillsArray
 
   await user.save({
     validateModifiedOnly: true,

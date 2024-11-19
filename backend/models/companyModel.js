@@ -2,15 +2,13 @@ const mongoose = require("mongoose")
 
 const companySchema = new mongoose.Schema(
   {
-    name: {
+    companyName: {
       type: String,
       required: [true, "A company must have a name"],
+      unique: true,
     },
     description: String,
-    website: {
-      type: String,
-      required: [true, "A company must have a website"],
-    },
+    website: String,
     location: String,
     logo: String,
     userId: {
