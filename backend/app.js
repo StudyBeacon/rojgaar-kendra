@@ -19,9 +19,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
+// test middleware
 app.use((req, res, next) => {
   // console.log(process.env.NODE_ENV)
-
+  // console.log(req.user._id)
   next()
 })
 

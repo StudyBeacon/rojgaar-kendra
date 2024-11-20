@@ -3,7 +3,8 @@ const AppError = require("../utils/appError")
 const Company = require("../models/companyModel")
 
 exports.registerCompany = catchAsync(async (req, res, next) => {
-  if (!req.body.companyName) {
+  const { companyName } = req.body
+  if (!companyName) {
     return next(new AppError("The name of the company is required", 400))
   }
 
@@ -53,11 +54,12 @@ exports.getCompanyById = catchAsync(async (req, res, next) => {
 })
 
 exports.updateCompany = catchAsync(async (req, res, next) => {
-  const userId = req.user._id
+  const userId = req.user.id
   const companyId = req.params.companyId
 
   const company = await Company.findById(companyId)
-  if (userId !== company.userId)
+
+  if (userId !== company.userId.toString())
     return next(
       new AppError("You are not authorized to update this company", 403)
     )

@@ -9,9 +9,7 @@ const router = express.Router()
 router.use(isAuthenticated)
 
 router.post("/register", companyController.registerCompany)
-
 router.get("/my-companies", companyController.getCompany)
-
 router
   .route("/:companyId")
   .get(companyController.getCompanyById)
