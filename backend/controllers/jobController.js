@@ -1,6 +1,6 @@
 const Job = require("../models/jobModel")
 const AppError = require("../utils/appError")
-const catchAsync = require("../utils/appError")
+const catchAsync = require("../utils/catchAsync")
 
 exports.postJob = catchAsync(async (req, res, next) => {
   const {
@@ -12,7 +12,7 @@ exports.postJob = catchAsync(async (req, res, next) => {
     jobType,
     positions,
     experienceLevel,
-    companyId,
+    company,
   } = req.body
 
   const userId = req.user.id
@@ -26,7 +26,7 @@ exports.postJob = catchAsync(async (req, res, next) => {
     jobType,
     positions,
     experienceLevel,
-    companyId,
+    company,
     createdBy: userId,
   })
 
@@ -50,7 +50,12 @@ exports.getAllJobs = catchAsync(async (req, res, next) => {
   }
 
   const jobs = await Job.find(query)
-  if (!jobs) return next(new AppError("No such jobs found!", 400))
+    .populate({
+      path: "company",
+    })
+    .sort({ createdAt: -1 })
+
+  if (!jobs.length) return next(new AppError("No jobs found!", 404))
 
   res.status(200).json({
     status: "success",
@@ -64,7 +69,9 @@ exports.getJobById = catchAsync(async (req, res, next) => {
   const jobId = req.params.jobId
 
   const job = await Job.findById(jobId)
-  if (!job) return next(new AppError("No such job found!", 404))
+
+  if (!job)
+    return next(new AppError(`No such job found with id - ${jobId}`, 404))
 
   res.status(200).json({
     status: "success",
@@ -78,7 +85,8 @@ exports.getJobsByUser = catchAsync(async (req, res, next) => {
   const userId = req.user.id
 
   const jobs = await Job.find({ createdBy: userId })
-  if (!jobs) return next(new AppError("No jobs posted by this user!", 404))
+  if (!jobs.length)
+    return next(new AppError("No jobs posted by this user!", 404))
 
   res.status(200).json({
     status: "success",

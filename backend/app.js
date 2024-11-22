@@ -5,6 +5,8 @@ const morgan = require("morgan")
 
 const userRouter = require("./routes/userRoutes")
 const companyRouter = require("./routes/companyRoutes")
+const jobRouter = require("./routes/jobRoutes")
+const applicationRouter = require("./routes/applicationRoutes")
 const globalErrorHandler = require("./controllers/errorController")
 
 const app = express()
@@ -35,6 +37,8 @@ app.use(cors(corsOptions))
 // routes
 app.use("/api/v1/user", userRouter)
 app.use("/api/v1/company", companyRouter)
+app.use("/api/v1/job", jobRouter)
+app.use("/api/v1/application", applicationRouter)
 
 // global error handler
 app.use(globalErrorHandler)

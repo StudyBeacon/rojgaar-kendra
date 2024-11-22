@@ -31,7 +31,7 @@ const jobSchema = new mongoose.Schema(
       type: Number,
       required: [true, "The years of experience for the job must be specified"],
     },
-    companyId: {
+    company: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
     },
