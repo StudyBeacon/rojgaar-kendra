@@ -50,6 +50,12 @@ export default {
           4: "hsl(var(--chart-4))",
           5: "hsl(var(--chart-5))",
         },
+
+        // my colors
+        orangeAccent: "#ff8e2b",
+        darkBlue: "#0d2137",
+        skyBlue: "#2e77ae",
+        aliceBlue: "#e0eaf5",
       },
     },
   },
