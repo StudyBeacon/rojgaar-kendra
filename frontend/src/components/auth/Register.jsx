@@ -1,13 +1,16 @@
 import { useState } from "react"
 import axios from "axios"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
+import { toast } from "sonner"
 
 const Register = () => {
+  const navigate = useNavigate()
+
   const [formInputs, setFormInputs] = useState({
     fullName: "",
     email: "",
@@ -43,8 +46,8 @@ const Register = () => {
     if (formInputs.file) formData.append("file", formInputs.file)
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/v1/user/register",
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/register`,
         formData,
         {
           headers: {
@@ -54,9 +57,13 @@ const Register = () => {
         }
       )
 
-      console.log(res.data)
+      if (response.status === 201) {
+        navigate("/")
+        toast.success(response.data.message)
+      }
     } catch (e) {
       console.error(e)
+      toast.error(e.response.data.message)
     }
   }
 
@@ -167,6 +174,7 @@ const Register = () => {
               id="picture"
               type="file"
               className="cursor-pointer"
+              name="file"
               onChange={changeFileHandler}
             />
           </div>
