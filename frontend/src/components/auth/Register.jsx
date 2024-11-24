@@ -1,15 +1,21 @@
 import { useState } from "react"
 import axios from "axios"
+import { toast } from "sonner"
 import { Link, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { setLoading } from "@/redux/authSlice"
+import { Loader } from "lucide-react"
 
+import logoImg from "../../assets/logoLightBG.png"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
-import { toast } from "sonner"
 
 const Register = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { loading } = useSelector(state => state.auth)
 
   const [formInputs, setFormInputs] = useState({
     fullName: "",
@@ -35,17 +41,11 @@ const Register = () => {
   const formSubmitHandler = async e => {
     e.preventDefault()
 
-    let formData = new FormData()
-    formData.append("fullName", formInputs.fullName)
-    formData.append("email", formInputs.email)
-    formData.append("password", formInputs.password)
-    formData.append("passwordConfirm", formInputs.passwordConfirm)
-    formData.append("phoneNumber", formInputs.phoneNumber)
-    formData.append("role", formInputs.role)
-
-    if (formInputs.file) formData.append("file", formInputs.file)
+    const formData = prepareFormData(formInputs)
 
     try {
+      dispatch(setLoading(true))
+
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/register`,
         formData,
@@ -64,14 +64,20 @@ const Register = () => {
     } catch (e) {
       console.error(e)
       toast.error(e.response.data.message)
+    } finally {
+      dispatch(setLoading(false))
     }
   }
 
   return (
-    <div className="flex items-center justify-center w-full max-w-7xl mx-auto px-auto text-darkBlue">
+    <div className="flex items-center justify-around h-screen w-full text-darkBlue bg-aliceBlue">
+      <div className="w-1/3 flex justify-center items-center ">
+        <img src={logoImg} alt="logo-image" />
+      </div>
+
       <form
         onSubmit={formSubmitHandler}
-        className="w-1/2 border border-gray-200 rounded-md p-4 my-10 shadow-lg"
+        className="w-1/3 border border-gray-200 rounded-md p-4 my-10 mr-4 shadow-lg bg-primary-foreground"
       >
         <h1 className="font-bold text-3xl mb-7 text-center">Register</h1>
         <div className="my-3">
@@ -180,9 +186,16 @@ const Register = () => {
           </div>
         </div>
 
-        <Button type="submit" className="w-full mb-4 bg-darkBlue">
-          Register
-        </Button>
+        {loading ? (
+          <Button disabled className="w-full mb-4">
+            <Loader className="animate-spin" />
+            Please wait
+          </Button>
+        ) : (
+          <Button type="submit" className="w-full mb-4 bg-darkBlue">
+            Register
+          </Button>
+        )}
 
         <span className="text-sm">
           Already have an account?{"  "}
@@ -193,6 +206,17 @@ const Register = () => {
       </form>
     </div>
   )
+}
+
+// helper function
+function prepareFormData(formInputs) {
+  let formData = new FormData()
+
+  Object.keys(formInputs).forEach(el => {
+    formData.append(el, formInputs[el])
+  })
+
+  return formData
 }
 
 export default Register

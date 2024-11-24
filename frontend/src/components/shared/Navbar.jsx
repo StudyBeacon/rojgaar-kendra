@@ -1,4 +1,4 @@
-import logoImg from "../../assets/logo.png"
+import logoImg from "../../assets/logoDarkBG.png"
 // import { Link } from "react-router-dom"
 
 import { LogOut, UserRound } from "lucide-react"
@@ -11,7 +11,7 @@ const Navbar = () => {
   const user = false
   return (
     <div className="bg-darkBlue">
-      <div className="flex items-center justify-between mx-auto max-w-7xl h-14">
+      <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
         <div className="left-nav">
           <img src={logoImg} alt="Rojgaar Hub" width={120} />
         </div>
