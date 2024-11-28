@@ -5,7 +5,7 @@ const randomJobs = [1, 2, 3]
 
 const Browse = () => {
   return (
-    <div>
+    <div className="h-screen w-full bg-aliceBlue">
       <Navbar />
       <div className="max-w-7xl mx-auto my-16">
         <h1 className="font-bold text-xl my-10">

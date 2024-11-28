@@ -63,7 +63,9 @@ const Login = () => {
   return (
     <div className="flex items-center justify-around h-screen w-full text-darkBlue bg-aliceBlue">
       <div className="w-1/3 flex justify-center items-center">
-        <img src={logoImg} alt="logo-image" />
+        <Link to="/">
+          <img src={logoImg} alt="logo-image" />
+        </Link>
       </div>
 
       <form
