@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { LogOut, UserRound } from "lucide-react"
+import { useSelector } from "react-redux"
 
 import { Button } from "../ui/button"
 import { Avatar, AvatarImage } from "../ui/avatar"
@@ -7,7 +8,7 @@ import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover"
 import logoImg from "../../assets/logoDarkBG.png"
 
 const Navbar = () => {
-  const user = false
+  const { user } = useSelector(state => state.auth)
 
   return (
     <div className="bg-darkBlue">
@@ -17,7 +18,7 @@ const Navbar = () => {
         </div>
 
         <div className="text-aliceBlue flex font-medium items-center gap-16">
-          <ul className="flex text-sm items-center gap-10 pl-9">
+          <ul className="flex text-sm items-center gap-10">
             <li className="hover:underline">
               <Link to="/">Home</Link>
             </li>

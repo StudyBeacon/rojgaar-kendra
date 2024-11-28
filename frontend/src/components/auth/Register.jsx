@@ -3,7 +3,7 @@ import axios from "axios"
 import { toast } from "sonner"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { setLoading } from "@/redux/authSlice"
+import { setLoading, setUser } from "@/redux/authSlice"
 import { Loader } from "lucide-react"
 
 import logoImg from "../../assets/logoLightBG.png"
@@ -58,8 +58,10 @@ const Register = () => {
       )
 
       if (response.status === 201) {
+        const { data, message } = response.data
+        dispatch(setUser(data.user))
         navigate("/")
-        toast.success(response.data.message)
+        toast.success(message)
       }
     } catch (e) {
       console.error(e)

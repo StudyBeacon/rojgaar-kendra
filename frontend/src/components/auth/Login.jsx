@@ -9,7 +9,7 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import logoImg from "../../assets/logoLightBG.png"
-import { setLoading } from "@/redux/authSlice"
+import { setLoading, setUser } from "@/redux/authSlice"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 
 const Login = () => {
@@ -48,8 +48,10 @@ const Login = () => {
       )
 
       if (response.status === 200) {
+        const { data, message } = response.data
+        dispatch(setUser(data.user))
         navigate("/")
-        toast.success(response.data.message)
+        toast.success(message)
       }
     } catch (e) {
       toast.error(e.response.data.message)
