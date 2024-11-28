@@ -1,26 +1,32 @@
-import logoImg from "../../assets/logoDarkBG.png"
-// import { Link } from "react-router-dom"
-
-import { LogOut, UserRound } from "lucide-react"
-import { Avatar, AvatarImage } from "../ui/avatar"
-import { Button } from "../ui/button"
-import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover"
 import { Link } from "react-router-dom"
+import { LogOut, UserRound } from "lucide-react"
+
+import { Button } from "../ui/button"
+import { Avatar, AvatarImage } from "../ui/avatar"
+import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover"
+import logoImg from "../../assets/logoDarkBG.png"
 
 const Navbar = () => {
   const user = false
+
   return (
     <div className="bg-darkBlue">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
         <div className="left-nav">
-          <img src={logoImg} alt="Rojgaar Hub" width={120} />
+          <img src={logoImg} alt="logo" width={120} />
         </div>
 
         <div className="middle-nav text-aliceBlue flex font-medium items-center gap-16">
-          <ul className="flex text-sm items-center gap-10 ">
-            <li>Home</li>
-            <li>Jobs</li>
-            <li>Browse</li>
+          <ul className="flex text-sm items-center gap-10 pl-9">
+            <li className="hover:underline">
+              <Link to="/">Home</Link>
+            </li>
+            <li className="hover:underline">
+              <Link to="/jobs">Jobs</Link>
+            </li>
+            <li className="hover:underline">
+              <Link to="/browse">Browse</Link>
+            </li>
           </ul>
         </div>
 

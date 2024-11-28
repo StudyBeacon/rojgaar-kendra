@@ -30,7 +30,7 @@ const Footer = () => {
         </div>
 
         <p className="mt-4 text-sm">
-          © {new Date().getFullYear()} Rojgaar Hub. All rights reserved.
+          © {new Date().getFullYear()} Rojgaar केन्द्र. All rights reserved.
         </p>
       </div>
     </footer>
