@@ -12,19 +12,19 @@ const Footer = () => {
       <div className="container mx-auto text-center">
         <p className="text-lg font-semibold mb-2">Follow us on</p>
         <div className="flex justify-center space-x-6">
-          <a href="" className="hover:text-blue-500">
+          <a className="hover:text-blue-500 cursor-pointer">
             <FontAwesomeIcon icon={faFacebook} size="lg" />
           </a>
 
-          <a href="" className="hover:text-blue-300">
+          <a className="hover:text-blue-300 cursor-pointer">
             <FontAwesomeIcon icon={faXTwitter} size="lg" />
           </a>
 
-          <a href="" className="hover:text-pink-500">
+          <a className="hover:text-pink-500 cursor-pointer">
             <FontAwesomeIcon icon={faInstagram} size="lg" />
           </a>
 
-          <a href="" className="hover:text-blue-700">
+          <a className="hover:text-blue-700 cursor-pointer">
             <FontAwesomeIcon icon={faLinkedin} size="lg" />
           </a>
         </div>

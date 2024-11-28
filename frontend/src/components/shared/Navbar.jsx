@@ -12,11 +12,11 @@ const Navbar = () => {
   return (
     <div className="bg-darkBlue">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
-        <div className="left-nav">
+        <div>
           <img src={logoImg} alt="logo" width={120} />
         </div>
 
-        <div className="middle-nav text-aliceBlue flex font-medium items-center gap-16">
+        <div className="text-aliceBlue flex font-medium items-center gap-16">
           <ul className="flex text-sm items-center gap-10 pl-9">
             <li className="hover:underline">
               <Link to="/">Home</Link>

@@ -6,9 +6,9 @@ const jobsArray = [1, 2, 3, 4, 5, 6, 7, 8]
 
 const Jobs = () => {
   return (
-    <div>
+    <div className=" text-darkBlue bg-aliceBlue">
       <Navbar />
-      <div className="max-w-7xl mx-auto mt-5">
+      <div className="max-w-7xl mx-auto pt-12 h-full w-full">
         <div className="flex gap-5">
           <div className="w-1/5">
             <FilterCard />
