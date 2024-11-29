@@ -56,6 +56,8 @@ export default {
         darkBlue: "#0d2137",
         skyBlue: "#2e77ae",
         aliceBlue: "#e0eaf5",
+        "hover-skyBlue": "#255f8b",
+        "hover-aliceBlue": "#c8d6e8",
       },
     },
   },

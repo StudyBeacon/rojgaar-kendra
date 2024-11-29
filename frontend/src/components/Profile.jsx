@@ -12,11 +12,14 @@ import { Avatar, AvatarImage } from "./ui/avatar"
 import { Badge } from "./ui/badge"
 import { Label } from "./ui/label"
 import AppliedJobsTable from "./AppliedJobsTable"
+import { useState } from "react"
+import UpdateProfileDialog from "./UpdateProfileDialog"
 
 const skills = ["html", "css", "javascript", "react.js"]
+const hasResume = true
 
 const Profile = () => {
-  const hasResume = true
+  const [open, setOpen] = useState(false)
 
   return (
     <div className="pb-14">
@@ -42,12 +45,16 @@ const Profile = () => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setOpen(true)}
+                >
                   <UserRoundPen />
                 </Button>
               </TooltipTrigger>
 
-              <TooltipContent side="left">
+              <TooltipContent>
                 <p>Edit Profile</p>
               </TooltipContent>
             </Tooltip>
@@ -74,7 +81,7 @@ const Profile = () => {
               skills.map((item, index) => (
                 <Badge
                   key={index}
-                  className="bg-skyBlue text-aliceBlue hover:bg-[#255f8b]"
+                  className="bg-skyBlue text-aliceBlue hover:bg-hover-skyBlue"
                 >
                   {item}
                 </Badge>
@@ -106,6 +113,8 @@ const Profile = () => {
         <h1 className="font-semibold text-lg my-5">Applied Jobs</h1>
         <AppliedJobsTable />
       </div>
+
+      <UpdateProfileDialog open={open} setOpen={setOpen} />
     </div>
   )
 }
