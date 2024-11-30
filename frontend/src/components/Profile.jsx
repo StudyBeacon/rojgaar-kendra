@@ -1,3 +1,5 @@
+import { useState } from "react"
+import { useSelector } from "react-redux"
 import { Mail, Phone, UserRoundPen } from "lucide-react"
 
 import {
@@ -12,14 +14,11 @@ import { Avatar, AvatarImage } from "./ui/avatar"
 import { Badge } from "./ui/badge"
 import { Label } from "./ui/label"
 import AppliedJobsTable from "./AppliedJobsTable"
-import { useState } from "react"
 import UpdateProfileDialog from "./UpdateProfileDialog"
-
-const skills = ["html", "css", "javascript", "react.js"]
-const hasResume = true
 
 const Profile = () => {
   const [open, setOpen] = useState(false)
+  const { user } = useSelector(state => state.auth)
 
   return (
     <div className="pb-14">
@@ -33,12 +32,9 @@ const Profile = () => {
 
             <div>
               <h1 className="font-medium text-xl text-skyBlue">
-                Aayush Dhungel
+                {user?.fullName}
               </h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo
-                voluptatem sunt minus eum commodi eligendi.
-              </p>
+              <p>{user?.profile?.bio}</p>
             </div>
           </div>
 
@@ -64,12 +60,12 @@ const Profile = () => {
         <div className="my-5">
           <div className="flex items-center gap-3 my-2">
             <Mail className="text-darkBlue" />
-            <span>aayush123@gmail.com</span>
+            <span>{user?.email}</span>
           </div>
 
           <div className="flex items-center gap-3 my-2">
             <Phone className="text-darkBlue" />
-            <span>9815838632</span>
+            <span>{user?.phoneNumber}</span>
           </div>
         </div>
 
@@ -77,8 +73,8 @@ const Profile = () => {
           <h1 className="font-bold text-base">Skills</h1>
 
           <div className="flex items-center gap-1">
-            {skills.length !== 0 ? (
-              skills.map((item, index) => (
+            {user?.profile?.skills?.length !== 0 ? (
+              user?.profile?.skills?.map((item, index) => (
                 <Badge
                   key={index}
                   className="bg-skyBlue text-aliceBlue hover:bg-hover-skyBlue"
@@ -95,13 +91,13 @@ const Profile = () => {
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label className="font-bold text-base">Resume</Label>
 
-          {hasResume ? (
+          {user?.profile?.resumeOriginalName ? (
             <a
               target="_blank"
-              href="https://youtube.com"
+              href={user?.profile?.resume}
               className="text-skyBlue w-full hover:underline"
             >
-              aayush-dhungel.pdf
+              {user?.profile?.resumeOriginalName}
             </a>
           ) : (
             <span>N/A</span>

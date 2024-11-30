@@ -14,11 +14,10 @@ import {
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
-import { setUser } from "@/redux/authSlice"
+import { setLoading, setUser } from "@/redux/authSlice"
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
-  const [loading, setLoading] = useState(false)
-  const { user } = useSelector(state => state.auth)
+  const { loading, user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
   const [input, setInput] = useState({
@@ -44,6 +43,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     const formData = prepareFormData(input)
 
     try {
+      dispatch(setLoading(true))
+
       const response = await axios.patch(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/profile/update`,
         formData,
@@ -63,6 +64,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     } catch (e) {
       console.error(e)
       toast.error(e.response.data.message)
+    } finally {
+      dispatch(setLoading(false))
     }
 
     setOpen(false)

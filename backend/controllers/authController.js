@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken")
 
 const catchAsync = require("../utils/catchAsync")
 const AppError = require("../utils/appError")
+const getDataUri = require("../utils/dataURI")
+const cloudinary = require("../utils/cloudinary")
 
 const User = require("../models/userModel")
 
@@ -38,6 +40,7 @@ const signAndSendToken = (user, statusCode, res) => {
 exports.register = catchAsync(async (req, res, next) => {
   const { fullName, email, password, passwordConfirm, phoneNumber, role } =
     req.body
+  const file = req.file
 
   const newUser = await User.create({
     fullName,
@@ -90,7 +93,6 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   }
 
   const { fullName, email, phoneNumber, bio, skills } = req.body
-  // const file = req.file
 
   const skillsArray = skills?.split(",")
 
@@ -104,6 +106,20 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   if (phoneNumber) user.phoneNumber = phoneNumber
   if (bio) user.profile.bio = bio
   if (skills) user.profile.skills = skillsArray
+
+  // receiving resume file and uploading it to cloudinary
+  if (req.file) {
+    const file = req.file
+    const fileUri = getDataUri(file)
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+      resource_type: "raw",
+    })
+
+    if (cloudResponse) {
+      user.profile.resume = cloudResponse.secure_url // cloudinary url to the resume file
+      user.profile.resumeOriginalName = file.originalname // display name of the resume
+    }
+  }
 
   await user.save({
     validateModifiedOnly: true,
