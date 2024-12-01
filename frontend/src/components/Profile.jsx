@@ -27,7 +27,12 @@ const Profile = () => {
         <div className="flex justify-between">
           <div className="flex items-center gap-4">
             <Avatar className="cursor-pointer size-24">
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage
+                src={
+                  user?.profile?.profilePhoto ||
+                  `https://wallpapers.com/images/high/placeholder-profile-icon-20tehfawxt5eihco.png`
+                }
+              />
             </Avatar>
 
             <div>

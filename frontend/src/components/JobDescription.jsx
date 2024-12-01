@@ -1,27 +1,60 @@
+import { useEffect } from "react"
+import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
+
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
+import { setSingleJob } from "@/redux/jobSlice"
 
 const JobDescription = () => {
   const isApplied = false
+  const { jobId } = useParams()
+
+  const dispatch = useDispatch()
+  const { singleJob } = useSelector(state => state.job)
+  const { user } = useSelector(state => state.auth)
+
+  useEffect(() => {
+    const fetchSingleJob = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/job/${jobId}`,
+          {
+            withCredentials: true,
+          }
+        )
+
+        if (response.status === 200) {
+          const { data } = response.data
+          dispatch(setSingleJob(data.job))
+        }
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    fetchSingleJob()
+  }, [jobId, dispatch, user?._id])
 
   return (
     <div className="max-w-7xl mx-auto my-10 bg-aliceBlue p-8 rounded-lg text-darkBlue shadow-lg">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-bold text-xl">FrontEnd Developer</h1>
+          <h1 className="font-bold text-xl">{singleJob?.title}</h1>
 
           <div className="flex items-center gap-2 mt-4">
             <Badge className="bg-skyBlue text-aliceBlue" variant="ghost">
-              12 Positions
+              {`${singleJob?.positions} Positions`}
             </Badge>
             <Badge
               className="bg-aliceBlue border-gray-400 text-darkBlue"
               variant="ghost"
             >
-              Part Time
+              {singleJob?.jobType}
             </Badge>
             <Badge className="bg-orangeAccent text-darkBlue" variant="ghost">
-              24LPA
+              {`${singleJob?.salary}LPA`}
             </Badge>
           </div>
         </div>
@@ -44,41 +77,50 @@ const JobDescription = () => {
         <h1 className="font-bold my-1">
           Role:
           <span className="pl-2 font-normal text-gray-800">
-            Frontend Developer
+            {singleJob?.title}
           </span>
         </h1>
 
         <h1 className="font-bold my-1">
           Location:
-          <span className="pl-2 font-normal text-gray-800">Kathmandu</span>
+          <span className="pl-2 font-normal text-gray-800">
+            {singleJob?.location}
+          </span>
         </h1>
 
         <h1 className="font-bold my-1">
           Description:
           <span className="pl-2 font-normal text-gray-800">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
-            numquam accusantium officia nihil!
+            {singleJob?.description}
           </span>
         </h1>
 
         <h1 className="font-bold my-1">
           Experience:
-          <span className="pl-2 font-normal text-gray-800">2 yrs</span>
+          <span className="pl-2 font-normal text-gray-800">
+            {singleJob?.experienceLevel} yrs
+          </span>
         </h1>
 
         <h1 className="font-bold my-1">
           Salary:
-          <span className="pl-2 font-normal text-gray-800">12LPA</span>
+          <span className="pl-2 font-normal text-gray-800">
+            {singleJob?.salary}LPA
+          </span>
         </h1>
 
         <h1 className="font-bold my-1">
           Total Applicants:
-          <span className="pl-2 font-normal text-gray-800">4</span>
+          <span className="pl-2 font-normal text-gray-800">
+            {singleJob?.applications?.length}
+          </span>
         </h1>
 
         <h1 className="font-bold my-1">
           Posted Date:
-          <span className="pl-2 font-normal text-gray-800">11-28-2024</span>
+          <span className="pl-2 font-normal text-gray-800">
+            {singleJob?.createdAt?.split("T")[0]}
+          </span>
         </h1>
       </div>
     </div>

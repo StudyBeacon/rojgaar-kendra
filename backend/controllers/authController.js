@@ -40,7 +40,17 @@ const signAndSendToken = (user, statusCode, res) => {
 exports.register = catchAsync(async (req, res, next) => {
   const { fullName, email, password, passwordConfirm, phoneNumber, role } =
     req.body
-  const file = req.file
+
+  // receiving profile pic file and uploading it to cloudinary
+  if (req.file) {
+    const file = req.file
+    const fileUri = getDataUri(file)
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content)
+
+    if (cloudResponse) {
+      var profileURL = cloudResponse.secure_url // cloudinary url to the profile picture file
+    }
+  }
 
   const newUser = await User.create({
     fullName,
@@ -49,6 +59,9 @@ exports.register = catchAsync(async (req, res, next) => {
     passwordConfirm,
     phoneNumber,
     role,
+    profile: {
+      profilePhoto: profileURL,
+    },
   })
 
   signAndSendToken(newUser, 201, res)
@@ -111,9 +124,7 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   if (req.file) {
     const file = req.file
     const fileUri = getDataUri(file)
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-      resource_type: "raw",
-    })
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content)
 
     if (cloudResponse) {
       user.profile.resume = cloudResponse.secure_url // cloudinary url to the resume file
