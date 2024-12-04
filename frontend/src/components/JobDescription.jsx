@@ -1,19 +1,52 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
+import { toast } from "sonner"
 
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
 import { setSingleJob } from "@/redux/jobSlice"
 
 const JobDescription = () => {
-  const isApplied = false
   const { jobId } = useParams()
 
   const dispatch = useDispatch()
   const { singleJob } = useSelector(state => state.job)
   const { user } = useSelector(state => state.auth)
+
+  const isInitiallyApplied = singleJob?.applications?.some(
+    application => application?.applicant === user?._id
+  )
+  const [isApplied, setIsApplied] = useState(isInitiallyApplied)
+
+  const applyJobHandler = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/application/apply/${jobId}`,
+        {
+          withCredentials: true,
+        }
+      )
+
+      if (response.status === 201) {
+        setIsApplied(true)
+
+        const updatedSingleJob = {
+          ...singleJob,
+          applications: [...singleJob.applications, { applicant: user?._id }],
+        }
+        console.log(updatedSingleJob)
+
+        dispatch(setSingleJob(updatedSingleJob))
+
+        toast.success(response.data.message)
+      }
+    } catch (e) {
+      console.error(e)
+      toast.error(e.response.data.message)
+    }
+  }
 
   useEffect(() => {
     const fetchSingleJob = async () => {
@@ -28,6 +61,12 @@ const JobDescription = () => {
         if (response.status === 200) {
           const { data } = response.data
           dispatch(setSingleJob(data.job))
+
+          setIsApplied(
+            data.job.applications?.some(
+              application => application?.applicant === user?._id
+            )
+          )
         }
       } catch (e) {
         console.error(e)
@@ -60,6 +99,7 @@ const JobDescription = () => {
         </div>
 
         <Button
+          onClick={isApplied ? null : applyJobHandler}
           disabled={isApplied}
           className={`rounded-lg ${
             isApplied ? "" : "bg-skyBlue text-aliceBlue hover:bg-hover-skyBlue"

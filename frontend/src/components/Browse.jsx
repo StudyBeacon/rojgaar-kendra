@@ -1,20 +1,21 @@
+import { useSelector } from "react-redux"
 import Job from "./Job"
 import Navbar from "./shared/Navbar"
 
-const randomJobs = [1, 2, 3]
-
 const Browse = () => {
+  const { allJobs } = useSelector(state => state.job)
+
   return (
     <div className="h-screen w-full bg-aliceBlue">
       <Navbar />
       <div className="max-w-7xl mx-auto my-16">
         <h1 className="font-bold text-xl my-10">
-          Search Results: ({randomJobs.length})
+          Search Results: ({allJobs.length})
         </h1>
 
         <div className="grid grid-cols-3 gap-4">
-          {randomJobs.map((job, index) => (
-            <Job key={index} />
+          {allJobs.map(job => (
+            <Job key={job._id} job={job} />
           ))}
         </div>
       </div>

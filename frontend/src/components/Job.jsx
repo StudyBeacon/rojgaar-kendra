@@ -49,7 +49,7 @@ const Job = ({ job }) => {
 
       <div className="flex items-center gap-2 mt-4">
         <Badge className="bg-skyBlue text-aliceBlue" variant="ghost">
-          {`${job.positions} Positions`}
+          {`${job?.positions} Positions`}
         </Badge>
         <Badge className="bg-aliceBlue text-darkBlue" variant="ghost">
           {job?.jobType}

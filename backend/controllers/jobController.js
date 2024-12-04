@@ -68,7 +68,7 @@ exports.getAllJobs = catchAsync(async (req, res, next) => {
 exports.getJobById = catchAsync(async (req, res, next) => {
   const jobId = req.params.jobId
 
-  const job = await Job.findById(jobId)
+  const job = await Job.findById(jobId).populate({ path: "applications" })
 
   if (!job)
     return next(new AppError(`No such job found with id - ${jobId}`, 404))
