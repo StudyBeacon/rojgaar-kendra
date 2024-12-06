@@ -2,6 +2,7 @@ const express = require("express")
 
 const companyController = require("../controllers/companyController")
 const isAuthenticated = require("../middlewares/isAuthenticated")
+const singleUpload = require("../middlewares/multer")
 
 const router = express.Router()
 
@@ -13,6 +14,6 @@ router.get("/my-companies", companyController.getCompany)
 router
   .route("/:companyId")
   .get(companyController.getCompanyById)
-  .patch(companyController.updateCompany)
+  .patch(singleUpload, companyController.updateCompany)
 
 module.exports = router

@@ -1,6 +1,8 @@
 const catchAsync = require("../utils/catchAsync")
 const AppError = require("../utils/appError")
 const Company = require("../models/companyModel")
+const getDataUri = require("../utils/dataURI")
+const cloudinary = require("../utils/cloudinary")
 
 exports.registerCompany = catchAsync(async (req, res, next) => {
   const { companyName } = req.body
@@ -19,6 +21,7 @@ exports.registerCompany = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
+    message: "Created a company successfully!",
     data: {
       company,
     },
@@ -29,7 +32,7 @@ exports.getCompany = catchAsync(async (req, res, next) => {
   const userId = req.user._id
 
   const companies = await Company.find({ userId })
-  if (!companies) return next(new AppError("No companies found!", 404))
+  if (!companies.length) return next(new AppError("No companies found!", 404))
 
   res.status(200).json({
     status: "success",
@@ -65,7 +68,18 @@ exports.updateCompany = catchAsync(async (req, res, next) => {
     )
 
   const { companyName, description, website, location } = req.body
-  // const file = req.file
+
+  // receiving logo  file and uploading it to cloudinary
+  if (req.file) {
+    const file = req.file
+    const fileUri = getDataUri(file)
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content)
+
+    if (cloudResponse) {
+      company.logo = cloudResponse.secure_url
+      await company.save({ validateModifiedOnly: true })
+    }
+  }
 
   const updatedData = { companyName, description, website, location }
   const updatedCompany = await Company.findByIdAndUpdate(

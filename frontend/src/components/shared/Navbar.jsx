@@ -44,15 +44,28 @@ const Navbar = () => {
 
         <div className=" flex font-medium items-center gap-12">
           <ul className="flex text-sm items-center gap-5">
-            <Button variant="link" className="text-aliceBlue">
-              <Link to="/">Home</Link>
-            </Button>
-            <Button variant="link" className="text-aliceBlue">
-              <Link to="/jobs">Jobs</Link>
-            </Button>
-            <Button variant="link" className="text-aliceBlue">
-              <Link to="/browse">Browse</Link>
-            </Button>
+            {user && user.role === "recruiter" ? (
+              <>
+                <Button variant="link" className="text-aliceBlue">
+                  <Link to="/my-companies">Companies</Link>
+                </Button>
+                <Button variant="link" className="text-aliceBlue">
+                  <Link to="/my-jobs">Jobs</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="link" className="text-aliceBlue">
+                  <Link to="/">Home</Link>
+                </Button>
+                <Button variant="link" className="text-aliceBlue">
+                  <Link to="/jobs">Jobs</Link>
+                </Button>
+                <Button variant="link" className="text-aliceBlue">
+                  <Link to="/browse">Browse</Link>
+                </Button>
+              </>
+            )}
           </ul>
 
           {!user ? (
@@ -102,12 +115,14 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex flex-col mt-5 ml-4">
-                  <div className="flex items-center w-fit cursor-pointer">
-                    <UserRound />
-                    <Button variant="link">
-                      <Link to="/profile">View Profile</Link>
-                    </Button>
-                  </div>
+                  {user && user.role === "jobSeeker" && (
+                    <div className="flex items-center w-fit cursor-pointer">
+                      <UserRound />
+                      <Button variant="link">
+                        <Link to="/profile">View Profile</Link>
+                      </Button>
+                    </div>
+                  )}
 
                   <div className="flex items-center w-fit cursor-pointer">
                     <LogOut />

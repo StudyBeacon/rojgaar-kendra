@@ -168,12 +168,6 @@ const Register = () => {
                   Recruiter
                 </Label>
               </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="admin" id="admin" />
-                <Label htmlFor="admin" className="cursor-pointer">
-                  Admin
-                </Label>
-              </div>
             </RadioGroup>
           </div>
 

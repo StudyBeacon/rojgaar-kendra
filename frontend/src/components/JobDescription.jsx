@@ -36,8 +36,6 @@ const JobDescription = () => {
           ...singleJob,
           applications: [...singleJob.applications, { applicant: user?._id }],
         }
-        console.log(updatedSingleJob)
-
         dispatch(setSingleJob(updatedSingleJob))
 
         toast.success(response.data.message)
