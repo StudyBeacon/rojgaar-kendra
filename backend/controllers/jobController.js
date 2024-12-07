@@ -84,7 +84,11 @@ exports.getJobById = catchAsync(async (req, res, next) => {
 exports.getJobsByUser = catchAsync(async (req, res, next) => {
   const userId = req.user.id
 
-  const jobs = await Job.find({ createdBy: userId })
+  const jobs = await Job.find({ createdBy: userId }).populate({
+    path: "company",
+    createdAt: -1,
+  })
+
   if (!jobs.length)
     return next(new AppError("No jobs posted by this user!", 404))
 

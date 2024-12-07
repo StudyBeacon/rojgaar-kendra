@@ -23,6 +23,7 @@ const useGetAllCompanies = () => {
         }
       } catch (e) {
         console.error(e)
+        dispatch(setCompanies([]))
       }
     }
 

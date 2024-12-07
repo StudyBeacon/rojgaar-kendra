@@ -6,14 +6,11 @@ const singleUpload = require("../middlewares/multer")
 
 const router = express.Router()
 
-// authenticate all the routes after this middleware
-router.use(isAuthenticated)
-
-router.post("/register", companyController.registerCompany)
-router.get("/my-companies", companyController.getCompany)
+router.post("/register", isAuthenticated, companyController.registerCompany)
+router.get("/my-companies", isAuthenticated, companyController.getCompany)
 router
   .route("/:companyId")
-  .get(companyController.getCompanyById)
-  .patch(singleUpload, companyController.updateCompany)
+  .get(isAuthenticated, companyController.getCompanyById)
+  .patch(isAuthenticated, singleUpload, companyController.updateCompany)
 
 module.exports = router

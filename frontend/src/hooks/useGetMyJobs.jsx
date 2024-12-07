@@ -2,16 +2,16 @@ import axios from "axios"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 
-import { setSingleCompany } from "@/redux/companySlice"
+import { setMyAllJobs } from "@/redux/jobSlice"
 
-const useGetCompanyById = companyId => {
+const useGetMyJobs = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const fetchSingleCompany = async () => {
+    const fetchMyAllJobs = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/company/${companyId}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/job/my-jobs`,
           {
             withCredentials: true,
           }
@@ -19,16 +19,16 @@ const useGetCompanyById = companyId => {
 
         if (response.status === 200) {
           const { data } = response.data
-          dispatch(setSingleCompany(data.company))
+          dispatch(setMyAllJobs(data.jobs))
         }
       } catch (e) {
         console.error(e)
-        dispatch(setSingleCompany(null))
+        dispatch(setMyAllJobs([]))
       }
     }
 
-    fetchSingleCompany()
-  }, [companyId, dispatch])
+    fetchMyAllJobs()
+  }, [])
 }
 
-export default useGetCompanyById
+export default useGetMyJobs

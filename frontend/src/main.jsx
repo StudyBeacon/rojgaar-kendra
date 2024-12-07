@@ -17,6 +17,6 @@ createRoot(document.getElementById("root")).render(
         <App />
       </PersistGate>
     </Provider>
-    <Toaster richColors position="top-center" />
+    <Toaster richColors theme="light" position="top-center" />
   </StrictMode>
 )
