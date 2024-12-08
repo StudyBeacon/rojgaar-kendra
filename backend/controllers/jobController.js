@@ -86,7 +86,6 @@ exports.getJobsByUser = catchAsync(async (req, res, next) => {
 
   const jobs = await Job.find({ createdBy: userId }).populate({
     path: "company",
-    createdAt: -1,
   })
 
   if (!jobs.length)

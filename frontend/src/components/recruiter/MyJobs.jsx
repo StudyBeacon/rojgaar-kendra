@@ -26,11 +26,11 @@ const MyJobs = () => {
         <div className="flex items-center justify-between my-6">
           <Input
             className="w-fit"
-            placeholder="Filter by job name"
+            placeholder="Filter by company or job role"
             onChange={e => setInput(e.target.value)}
           />
           <Button
-            onClick={() => navigate("/register-company")}
+            onClick={() => navigate("/post-job")}
             className="bg-skyBlue hover:bg-hover-skyBlue text-aliceBlue"
           >
             Post a Job

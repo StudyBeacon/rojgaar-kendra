@@ -1,4 +1,4 @@
-import { Edit2, MoreHorizontal } from "lucide-react"
+import { Edit2, Eye, MoreHorizontal } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import {
   Table,
@@ -25,7 +25,12 @@ const MyJobsTable = () => {
       myAllJobs.filter(job => {
         if (!searchJobText) return true
 
-        return job?.title?.toLowerCase().includes(searchJobText.toLowerCase())
+        return (
+          job?.title?.toLowerCase().includes(searchJobText.toLowerCase()) ||
+          job?.company?.companyName
+            ?.toLowerCase()
+            .includes(searchJobText.toLowerCase())
+        )
       })
 
     setFilterJobs(filteredJobs)
@@ -63,13 +68,23 @@ const MyJobsTable = () => {
                         <PopoverTrigger>
                           <MoreHorizontal />
                         </PopoverTrigger>
-                        <PopoverContent className="w-24 text-darkBlue">
+                        <PopoverContent className="w-fit text-darkBlue">
                           <div
                             onClick={() => navigate(`/my-jobs/${job._id}`)}
                             className="flex items-center gap-2 w-fit cursor-pointer"
                           >
                             <Edit2 className="w-4 " />
                             <span>Edit</span>
+                          </div>
+
+                          <div
+                            onClick={() =>
+                              navigate(`/my-jobs/${job._id}/applicants`)
+                            }
+                            className="flex items-center gap-2 w-fit cursor-pointer mt-2"
+                          >
+                            <Eye className="w-4" />
+                            <span>Applicants</span>
                           </div>
                         </PopoverContent>
                       </Popover>

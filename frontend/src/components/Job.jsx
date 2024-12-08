@@ -32,7 +32,12 @@ const Job = ({ job }) => {
       <div className="flex items-center gap-2 my-2">
         <Button size="icon" variant="outline" className="p-6">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage
+              src={
+                job?.company?.logo ||
+                "https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image-300x300.png"
+              }
+            />
           </Avatar>
         </Button>
 
