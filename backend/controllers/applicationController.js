@@ -70,28 +70,28 @@ exports.getApplicants = catchAsync(async (req, res, next) => {
 
   if (!jobId) return next(new AppError("jobId not found in the params", 400))
 
-  // const applications = await Application.find({ job: jobId }).populate({
-  //   path: "applicant",
-  // })
-  // if (!applications.length)
-  //   return next(
-  //     new AppError("No applications associated with this job found!", 404)
-  //   )
-
-  const job = await Job.findById(jobId).populate({
-    path: "applications",
-    options: { sort: { createdAt: -1 } },
-    populate: {
-      path: "applicant",
-    },
+  const applications = await Application.find({ job: jobId }).populate({
+    path: "applicant",
   })
+  if (!applications.length)
+    return next(
+      new AppError("No applications associated with this job found!", 404)
+    )
 
-  if (!job) return next(new AppError("No such job found!", 404))
+  // const job = await Job.findById(jobId).populate({
+  //   path: "applications",
+  //   options: { sort: { createdAt: -1 } },
+  //   populate: {
+  //     path: "applicant",
+  //   },
+  // })
+
+  // if (!job) return next(new AppError("No such job found!", 404))
 
   res.status(200).json({
     status: "success",
     data: {
-      job,
+      applications,
     },
   })
 })
