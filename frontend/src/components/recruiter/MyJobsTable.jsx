@@ -70,18 +70,10 @@ const MyJobsTable = () => {
                         </PopoverTrigger>
                         <PopoverContent className="w-fit text-darkBlue">
                           <div
-                            onClick={() => navigate(`/my-jobs/${job._id}`)}
-                            className="flex items-center gap-2 w-fit cursor-pointer"
-                          >
-                            <Edit2 className="w-4 " />
-                            <span>Edit</span>
-                          </div>
-
-                          <div
                             onClick={() =>
                               navigate(`/my-jobs/${job._id}/applicants`)
                             }
-                            className="flex items-center gap-2 w-fit cursor-pointer mt-2"
+                            className="flex items-center gap-2 w-fit cursor-pointer"
                           >
                             <Eye className="w-4" />
                             <span>Applicants</span>
