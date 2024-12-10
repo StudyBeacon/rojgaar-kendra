@@ -1,10 +1,10 @@
-import { useState } from "react"
 import axios from "axios"
 import { toast } from "sonner"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { setLoading, setUser } from "@/redux/authSlice"
 import { Loader } from "lucide-react"
+import { useEffect, useState } from "react"
 
 import logoImg from "../../assets/logoLightBG.png"
 import { Button } from "../ui/button"
@@ -15,7 +15,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 const Register = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { loading } = useSelector(state => state.auth)
+  const { loading, user } = useSelector(state => state.auth)
 
   const [formInputs, setFormInputs] = useState({
     fullName: "",
@@ -70,6 +70,13 @@ const Register = () => {
       dispatch(setLoading(false))
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      toast.warning("You're already logged in!")
+      navigate("/")
+    }
+  }, [])
 
   return (
     <div className="flex items-center justify-around h-screen w-full text-darkBlue bg-aliceBlue">

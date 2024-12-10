@@ -12,6 +12,7 @@ import CompanyProfile from "./components/recruiter/CompanyProfile"
 import MyJobs from "./components/recruiter/MyJobs"
 import PostJob from "./components/recruiter/PostJob"
 import Applicants from "./components/recruiter/Applicants"
+import ProtectedRoute from "./components/recruiter/ProtectedRoute"
 
 const appRouter = createBrowserRouter([
   {
@@ -44,27 +45,51 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/my-companies",
-    element: <Companies />,
+    element: (
+      <ProtectedRoute>
+        <Companies />,
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/register-company",
-    element: <CompanyCreate />,
+    element: (
+      <ProtectedRoute>
+        <CompanyCreate />,
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/my-companies/:companyId",
-    element: <CompanyProfile />,
+    element: (
+      <ProtectedRoute>
+        <CompanyProfile />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/my-jobs",
-    element: <MyJobs />,
+    element: (
+      <ProtectedRoute>
+        <MyJobs />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/post-job",
-    element: <PostJob />,
+    element: (
+      <ProtectedRoute>
+        <PostJob />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/my-jobs/:jobId/applicants",
-    element: <Applicants />,
+    element: (
+      <ProtectedRoute>
+        <Applicants />
+      </ProtectedRoute>
+    ),
   },
 ])
 

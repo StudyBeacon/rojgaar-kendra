@@ -15,8 +15,11 @@ import { Badge } from "./ui/badge"
 import { Label } from "./ui/label"
 import AppliedJobsTable from "./AppliedJobsTable"
 import UpdateProfileDialog from "./UpdateProfileDialog"
+import useGetAppliedJobs from "@/hooks/useGetAppliedJobs"
 
 const Profile = () => {
+  useGetAppliedJobs()
+
   const [open, setOpen] = useState(false)
   const { user } = useSelector(state => state.auth)
 

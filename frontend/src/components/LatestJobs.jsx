@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux"
 import LatestJobCards from "./LatestJobCards"
+import { motion } from "framer-motion"
 
 const LatestJobs = () => {
   const { allJobs } = useSelector(state => state.job)
@@ -16,9 +17,26 @@ const LatestJobs = () => {
             No Jobs Found!
           </span>
         ) : (
-          allJobs
-            ?.slice(0, 6)
-            .map(job => <LatestJobCards key={job._id} job={job} />)
+          allJobs?.slice(0, 6).map((job, index) => (
+            <motion.div
+              key={job._id}
+              initial={{
+                opacity: 0,
+                y: 50,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: 0.5,
+                  delay: index * 0.1,
+                },
+              }}
+              viewport={{ once: true }}
+            >
+              <LatestJobCards job={job} />
+            </motion.div>
+          ))
         )}
       </div>
     </div>

@@ -1,9 +1,22 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Job from "./Job"
 import Navbar from "./shared/Navbar"
+import useGetAllJobs from "@/hooks/useGetAllJobs"
+import { useEffect } from "react"
+import { setSearchQuery } from "@/redux/jobSlice"
+import { motion } from "framer-motion"
 
 const Browse = () => {
+  useGetAllJobs()
+
   const { allJobs } = useSelector(state => state.job)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    return () => {
+      dispatch(setSearchQuery(""))
+    }
+  }, [])
 
   return (
     <div className="h-screen w-full bg-aliceBlue">
@@ -14,8 +27,25 @@ const Browse = () => {
         </h1>
 
         <div className="grid grid-cols-3 gap-4">
-          {allJobs.map(job => (
-            <Job key={job._id} job={job} />
+          {allJobs.map((job, index) => (
+            <motion.div
+              key={job._id}
+              initial={{
+                opacity: 0,
+                y: 50,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: 0.5,
+                  delay: index * 0.1,
+                },
+              }}
+              viewport={{ once: true }}
+            >
+              <Job job={job} />
+            </motion.div>
           ))}
         </div>
       </div>

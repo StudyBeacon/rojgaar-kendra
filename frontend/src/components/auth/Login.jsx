@@ -1,6 +1,6 @@
 import axios from "axios"
 import { toast } from "sonner"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Loader } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
@@ -15,7 +15,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { loading } = useSelector(state => state.auth)
+  const { loading, user } = useSelector(state => state.auth)
 
   const [formInputs, setFormInputs] = useState({
     email: "",
@@ -59,6 +59,13 @@ const Login = () => {
       dispatch(setLoading(false))
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      toast.warning("You're already logged in!")
+      navigate("/")
+    }
+  }, [])
 
   return (
     <div className="flex items-center justify-around h-screen w-full text-darkBlue bg-aliceBlue">
