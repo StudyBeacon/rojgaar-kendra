@@ -8,6 +8,7 @@ const companyRouter = require("./routes/companyRoutes")
 const jobRouter = require("./routes/jobRoutes")
 const applicationRouter = require("./routes/applicationRoutes")
 const globalErrorHandler = require("./controllers/errorController")
+const AppError = require("./utils/appError")
 
 const app = express()
 
@@ -39,6 +40,10 @@ app.use("/api/v1/user", userRouter)
 app.use("/api/v1/company", companyRouter)
 app.use("/api/v1/job", jobRouter)
 app.use("/api/v1/application", applicationRouter)
+
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
 
 // global error handler
 app.use(globalErrorHandler)
