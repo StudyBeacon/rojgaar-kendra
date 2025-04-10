@@ -6,14 +6,14 @@ const LatestJobs = () => {
   const { allJobs } = useSelector(state => state.job)
 
   return (
-    <div className="max-w-7xl mx-auto my-20 text-darkBlue">
-      <h1 className="text-4xl font-bold">
+    <div className="max-w-7xl mx-auto px-4 my-8 sm:my-12 md:my-16 lg:my-20 text-darkBlue">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center sm:text-left">
         <span className="text-skyBlue">Latest & Top </span>Job Openings
       </h1>
 
-      <div className="grid grid-cols-3 gap-4 my-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 my-4 sm:my-5">
         {allJobs.length === 0 ? (
-          <span className="col-span-3 text-center my-10 text-skyBlue font-medium text-2xl">
+          <span className="col-span-1 sm:col-span-2 lg:col-span-3 text-center my-6 sm:my-8 lg:my-10 text-skyBlue font-medium text-xl sm:text-2xl">
             No Jobs Found!
           </span>
         ) : (

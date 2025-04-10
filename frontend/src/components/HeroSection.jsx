@@ -18,23 +18,23 @@ const HeroSection = () => {
   }
 
   return (
-    <div className="h-full w-full pt-28 pb-20 bg-aliceBlue text-center text-darkBlue">
-      <div className="flex flex-col gap-5">
-        <span className="font-medium text-lg bg-orangeAccent mx-auto rounded-full px-4 py-1">
+    <div className="w-full pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-10 sm:pb-14 lg:pb-20 bg-aliceBlue text-center text-darkBlue">
+      <div className="flex flex-col gap-3 sm:gap-4 lg:gap-5 px-4 sm:px-6 max-w-4xl mx-auto">
+        <span className="font-medium text-sm sm:text-base lg:text-lg bg-orangeAccent mx-auto rounded-full px-3 sm:px-4 py-1">
           Nepal&apos;s No. 1 <span className="text-skyBlue">Job Portal</span>
         </span>
 
-        <h1 className="text-5xl font-bold">
-          Search, Apply & <br /> Get Your
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold px-2">
+          Search, Apply & <br className="hidden sm:block" /> Get Your
           <span className="text-skyBlue"> Dream Job</span>
         </h1>
 
-        <p>
+        <p className="text-sm sm:text-base max-w-xl mx-auto px-2">
           Find your dream job with ease! Explore opportunities, connect with
           employers, and apply effortlessly today.
         </p>
 
-        <div className="flex w-[40%] shadow-lg items-center mx-auto">
+        <div className="flex w-full sm:w-4/5 md:w-3/5 lg:w-2/5 shadow-lg items-center mx-auto mt-2 sm:mt-4">
           <Input
             type="text"
             placeholder="Find your job..."

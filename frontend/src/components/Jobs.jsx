@@ -24,21 +24,23 @@ const Jobs = () => {
   }, [allJobs, searchQuery])
 
   return (
-    <div className=" text-darkBlue bg-aliceBlue">
+    <div className="text-darkBlue bg-aliceBlue min-h-screen">
       <Navbar />
-      <div className="max-w-7xl mx-auto pt-12 h-screen w-full">
-        <div className="flex gap-5">
-          <div className="w-1/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 lg:pt-12 h-full">
+        <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 lg:gap-5">
+          <div className="w-full lg:w-1/5 mb-4 lg:mb-0">
             <FilterCard />
           </div>
 
           {filterJobs.length === 0 ? (
-            <span className="flex justify-center items-center mx-auto text-skyBlue font-medium text-2xl">
-              No Jobs Found!
-            </span>
+            <div className="flex-1 flex justify-center items-center h-40 sm:h-60 lg:h-[80vh] mx-auto">
+              <span className="text-skyBlue font-medium text-lg sm:text-xl md:text-2xl">
+                No Jobs Found!
+              </span>
+            </div>
           ) : (
-            <div className="flex-1 h-[90vh] overflow-y-auto pb-5">
-              <div className="grid grid-cols-3 gap-4">
+            <div className="flex-1 h-full max-h-[70vh] sm:max-h-[80vh] lg:h-[90vh] overflow-y-auto pb-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {filterJobs.map((job, index) => (
                   <motion.div
                     key={job._id}
