@@ -19,14 +19,14 @@ const Browse = () => {
   }, [])
 
   return (
-    <div className="h-screen w-full bg-aliceBlue">
+    <div className="min-h-screen w-full bg-aliceBlue">
       <Navbar />
-      <div className="max-w-7xl mx-auto my-16">
-        <h1 className="font-bold text-xl my-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 md:my-12 lg:my-16">
+        <h1 className="font-bold text-xl my-6 md:my-8 lg:my-10">
           Search Results: ({allJobs.length})
         </h1>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {allJobs.map((job, index) => (
             <motion.div
               key={job._id}
