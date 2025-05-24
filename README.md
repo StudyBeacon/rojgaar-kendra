@@ -1,12 +1,9 @@
----
-marp: true
----
 
-# MERN Stack Job Portal - README
+# Rojgaar Kendra - Job Portal
 
 ## Overview
 
-This repository contains a **MERN Stack Job Portal** project that provides a platform for job seekers and employers to connect. The project is divided into two main sections: **frontend** and **backend**, both built using modern web development technologies.
+This repository contains a **Rojgaar Kendra - Job Portal** project that provides a platform for job seekers and employers to connect. The project is divided into two main sections: **frontend** and **backend**, both built using modern web development technologies.
 
 ### Features
 
@@ -14,7 +11,7 @@ This repository contains a **MERN Stack Job Portal** project that provides a pla
 - Role-based functionality (job seekers and employers)
 - Job posting and application management
 - Responsive design for seamless user experience
-- Deployed at: [rojgaar-kendra-aayush.vercel.app](rojgaar-kendra-aayush.vercel.app)
+- Deployed at: [rojgar-kendra.vercel.app](rojgar-kendra.vercel.app)
 
 ---
 
@@ -44,8 +41,8 @@ Follow these steps to set up the project locally:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/hsuyaa0413/MERN-Stack-jobPortal.git
-cd MERN-Stack-jobPortal
+git clone https://github.com/hsuyaa0413/rojgaar-kendra.git
+cd rojgaar-kendra
 ```
 
 ### 2. Backend Setup
@@ -117,7 +114,7 @@ The frontend will run on `http://localhost:3000`.
 
 ## Deployment
 
-The project is already deployed at [rojgaar-kendra-aayush.vercel.app](rojgaar-kendra-aayush.vercel.app). For redeployment:
+The project is already deployed at [rojgar-kendra.vercel.app](rojgar-kendra.vercel.app). For redeployment:
 
 1. Use platforms like Vercel for frontend deployment.
 2. Use platforms like Heroku or Render for backend deployment.
@@ -151,7 +148,7 @@ This project is open-source under no specific license mentioned in the repositor
 For any issues or questions, contact the repository owner via GitHub.
 
 Citations:
-[1] https://github.com/hsuyaa0413/MERN-Stack-jobPortal
+[1] https://github.com/hsuyaa0413/rojgaar-kendra
 
 ---
 
