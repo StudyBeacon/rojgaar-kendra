@@ -1,8 +1,6 @@
-// src/components/CareerChat.jsx
-
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import "./CareerChat.css"; // ✅ Make sure this is imported
+import "./CareerChat.css";
 
 const CareerChat = () => {
   const [topic, setTopic] = useState("resume");
@@ -11,27 +9,35 @@ const CareerChat = () => {
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
 
+  // Scrolls the chat to the latest message
   const scrollToBottom = () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Sends the user message to the backend
   const handleSend = async () => {
     if (!message.trim()) return;
+
     setLoading(true);
-    setChat((prev) => [...prev, { user: message }]);
+    setChat((prev) => [...prev, { role: "user", text: message }]);
     setMessage("");
     scrollToBottom();
 
     try {
-      const { data } = await axios.post("/api/career-help", {
+      const { data } = await axios.post("http://localhost:5000/api/career-help", {
         message,
         topic,
       });
-      setChat((prev) => [...prev, { bot: data.reply }]);
+
+      setChat((prev) => [...prev, { role: "bot", text: data.reply }]);
     } catch (err) {
       setChat((prev) => [
         ...prev,
-        { bot: `Error: ${err.response?.data?.error || err.message}` },
+        {
+          role: "bot",
+          text:
+            `❌ Error: ` + (err.response?.data?.error || "Could not connect to server."),
+        },
       ]);
     } finally {
       setLoading(false);
@@ -39,6 +45,7 @@ const CareerChat = () => {
     }
   };
 
+  // Handles Enter to send, Shift+Enter for multiline
   const onKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -49,7 +56,7 @@ const CareerChat = () => {
   return (
     <div className="career-chat-page">
       <div className="career-chat">
-        <h2>Frontend Career Coach</h2>
+        <h2>💬 Frontend Career Coach</h2>
 
         <select
           className="topic-select"
@@ -63,11 +70,11 @@ const CareerChat = () => {
 
         <div className="chat-window">
           {chat.length === 0 ? (
-            <p className="typing">Ask me anything about your career…</p>
+            <p className="typing">Ask me anything about your tech career…</p>
           ) : (
             chat.map((c, i) => (
-              <div key={i} className={c.user ? "msg-user" : "msg-bot"}>
-                <span>{c.user || c.bot}</span>
+              <div key={i} className={c.role === "user" ? "msg-user" : "msg-bot"}>
+                <span>{c.text}</span>
               </div>
             ))
           )}
@@ -77,12 +84,14 @@ const CareerChat = () => {
 
         <div className="input-area">
           <input
+            autoFocus
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={onKeyDown}
             placeholder="Type your question..."
+            disabled={loading}
           />
-          <button onClick={handleSend} disabled={loading}>
+          <button onClick={handleSend} disabled={loading || !message.trim()}>
             Send
           </button>
         </div>
