@@ -4,6 +4,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 
+// General components
 import Home from "./components/Home";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
@@ -12,6 +13,7 @@ import Browse from "./components/Browse";
 import Profile from "./components/Profile";
 import JobDescription from "./components/JobDescription";
 
+// Recruiter-related components
 import Companies from "./components/recruiter/Companies";
 import CompanyCreate from "./components/recruiter/CompanyCreate";
 import CompanyProfile from "./components/recruiter/CompanyProfile";
@@ -20,9 +22,11 @@ import PostJob from "./components/recruiter/PostJob";
 import Applicants from "./components/recruiter/Applicants";
 import ProtectedRoute from "./components/recruiter/ProtectedRoute";
 
-// Import your chat component
+// AI Feature components
 import CareerChat from "./components/CareerChat";
+import ResumeBuilder from "./components/ResumeBuilder"; // ✅ Added resume route
 
+// Define the app routes
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -103,10 +107,16 @@ const appRouter = createBrowserRouter([
     ),
   },
 
-  // Frontend career coach chat route
+  // AI Career Chat route
   {
     path: "/chat",
     element: <CareerChat />,
+  },
+
+  // ✅ Resume Builder route
+  {
+    path: "/resume-builder",
+    element: <ResumeBuilder />,
   },
 ]);
 

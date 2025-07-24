@@ -64,52 +64,35 @@ const Navbar = () => {
                 <div className="flex flex-col space-y-2">
                   {user && user.role === "recruiter" ? (
                     <>
-                      <Link
-                        to="/my-companies"
-                        className="text-sm font-medium hover:text-skyBlue"
-                      >
+                      <Link to="/my-companies" className="text-sm font-medium hover:text-skyBlue">
                         Companies
                       </Link>
-                      <Link
-                        to="/my-jobs"
-                        className="text-sm font-medium hover:text-skyBlue"
-                      >
+                      <Link to="/my-jobs" className="text-sm font-medium hover:text-skyBlue">
                         Jobs
                       </Link>
-                      {/* Career Chat for recruiters too if desired */}
-                      <Link
-                        to="/chat"
-                        className="text-sm font-medium hover:text-skyBlue"
-                      >
+                      <Link to="/chat" className="text-sm font-medium hover:text-skyBlue">
                         Career Chat
+                      </Link>
+                      <Link to="/resume-builder" className="text-sm font-medium hover:text-skyBlue">
+                        Resume Builder
                       </Link>
                     </>
                   ) : (
                     <>
-                      <Link
-                        to="/"
-                        className="text-sm font-medium hover:text-skyBlue"
-                      >
+                      <Link to="/" className="text-sm font-medium hover:text-skyBlue">
                         Home
                       </Link>
-                      <Link
-                        to="/jobs"
-                        className="text-sm font-medium hover:text-skyBlue"
-                      >
+                      <Link to="/jobs" className="text-sm font-medium hover:text-skyBlue">
                         Jobs
                       </Link>
-                      <Link
-                        to="/browse"
-                        className="text-sm font-medium hover:text-skyBlue"
-                      >
+                      <Link to="/browse" className="text-sm font-medium hover:text-skyBlue">
                         Browse
                       </Link>
-                      {/* Career Chat link */}
-                      <Link
-                        to="/chat"
-                        className="text-sm font-medium hover:text-skyBlue"
-                      >
+                      <Link to="/chat" className="text-sm font-medium hover:text-skyBlue">
                         Career Chat
+                      </Link>
+                      <Link to="/resume-builder" className="text-sm font-medium hover:text-skyBlue">
+                        Resume Builder
                       </Link>
                     </>
                   )}
@@ -118,14 +101,10 @@ const Navbar = () => {
                 {!user ? (
                   <div className="flex flex-col space-y-2 pt-2 border-t">
                     <Link to="/login">
-                      <Button variant="ghost" className="w-full">
-                        Log In
-                      </Button>
+                      <Button variant="ghost" className="w-full">Log In</Button>
                     </Link>
                     <Link to="/register">
-                      <Button variant="secondary" className="w-full">
-                        Register
-                      </Button>
+                      <Button variant="secondary" className="w-full">Register</Button>
                     </Link>
                   </div>
                 ) : (
@@ -140,29 +119,19 @@ const Navbar = () => {
                         />
                       </Avatar>
                       <div>
-                        <h4 className="font-medium text-skyBlue text-sm">
-                          {user?.fullName}
-                        </h4>
-                        <p className="text-xs text-muted-foreground line-clamp-2">
-                          {user?.profile?.bio}
-                        </p>
+                        <h4 className="font-medium text-skyBlue text-sm">{user?.fullName}</h4>
+                        <p className="text-xs text-muted-foreground line-clamp-2">{user?.profile?.bio}</p>
                       </div>
                     </div>
 
                     <div className="flex flex-col space-y-2">
                       {user.role === "jobSeeker" && (
-                        <Link
-                          to="/profile"
-                          className="flex items-center gap-2 text-sm hover:text-skyBlue"
-                        >
+                        <Link to="/profile" className="flex items-center gap-2 text-sm hover:text-skyBlue">
                           <UserRound size={16} />
                           View Profile
                         </Link>
                       )}
-                      <button
-                        onClick={handleLogOut}
-                        className="flex items-center gap-2 text-sm hover:text-skyBlue"
-                      >
+                      <button onClick={handleLogOut} className="flex items-center gap-2 text-sm hover:text-skyBlue">
                         <LogOut size={16} />
                         Log Out
                       </button>
@@ -188,6 +157,9 @@ const Navbar = () => {
                 <Button variant="link" className="text-aliceBlue">
                   <Link to="/chat">Career Chat</Link>
                 </Button>
+                <Button variant="link" className="text-aliceBlue">
+                  <Link to="/resume-builder">Resume Builder</Link>
+                </Button>
               </>
             ) : (
               <>
@@ -203,6 +175,9 @@ const Navbar = () => {
                 <Button variant="link" className="text-aliceBlue">
                   <Link to="/chat">Career Chat</Link>
                 </Button>
+                <Button variant="link" className="text-aliceBlue">
+                  <Link to="/resume-builder">Resume Builder</Link>
+                </Button>
               </>
             )}
           </ul>
@@ -214,7 +189,6 @@ const Navbar = () => {
                   Log In
                 </Button>
               </Link>
-
               <Link to="/register">
                 <Button variant="secondary">Register</Button>
               </Link>
@@ -244,12 +218,8 @@ const Navbar = () => {
                   </Avatar>
 
                   <div>
-                    <h4 className="font-medium text-skyBlue">
-                      {user?.fullName}
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      {user?.profile?.bio}
-                    </p>
+                    <h4 className="font-medium text-skyBlue">{user?.fullName}</h4>
+                    <p className="text-sm text-muted-foreground">{user?.profile?.bio}</p>
                   </div>
                 </div>
 
