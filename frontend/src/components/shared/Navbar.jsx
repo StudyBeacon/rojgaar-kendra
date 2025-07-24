@@ -1,19 +1,22 @@
-import axios from "axios"
-import { Link, useNavigate } from "react-router-dom"
-import { AlignJustify, LogOut, UserRound } from "lucide-react"
-import { useDispatch, useSelector } from "react-redux"
-import { toast } from "sonner"
-import { setUser } from "@/redux/authSlice"
+// src/components/Navbar.jsx
 
-import { Button } from "../ui/button"
-import { Avatar, AvatarImage } from "../ui/avatar"
-import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover"
-import logoImg from "../../assets/logoDarkBG.png"
+import React from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { AlignJustify, LogOut, UserRound } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import { setUser } from "@/redux/authSlice";
+
+import { Button } from "../ui/button";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
+import logoImg from "../../assets/logoDarkBG.png";
 
 const Navbar = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const { user } = useSelector(state => state.auth)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   const handleLogOut = async () => {
     try {
@@ -22,24 +25,27 @@ const Navbar = () => {
         {
           withCredentials: true,
         }
-      )
+      );
 
       if (response.status === 200) {
-        dispatch(setUser(null))
-        navigate("/")
-        toast.success(response.data.message)
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(response.data.message);
       }
     } catch (e) {
-      console.error(e)
-      toast.error(e.response.data.message)
+      console.error(e);
+      toast.error(e.response?.data?.message || "Logout failed");
     }
-  }
+  };
 
   return (
     <div className="bg-darkBlue">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4 sm:px-6 lg:px-8">
+        {/* Logo */}
         <div>
-          <img src={logoImg} alt="logo" width={120} />
+          <Link to="/">
+            <img src={logoImg} alt="logo" width={120} />
+          </Link>
         </div>
 
         {/* Mobile hamburger menu */}
@@ -70,6 +76,13 @@ const Navbar = () => {
                       >
                         Jobs
                       </Link>
+                      {/* Career Chat for recruiters too if desired */}
+                      <Link
+                        to="/chat"
+                        className="text-sm font-medium hover:text-skyBlue"
+                      >
+                        Career Chat
+                      </Link>
                     </>
                   ) : (
                     <>
@@ -90,6 +103,13 @@ const Navbar = () => {
                         className="text-sm font-medium hover:text-skyBlue"
                       >
                         Browse
+                      </Link>
+                      {/* Career Chat link */}
+                      <Link
+                        to="/chat"
+                        className="text-sm font-medium hover:text-skyBlue"
+                      >
+                        Career Chat
                       </Link>
                     </>
                   )}
@@ -130,7 +150,7 @@ const Navbar = () => {
                     </div>
 
                     <div className="flex flex-col space-y-2">
-                      {user && user.role === "jobSeeker" && (
+                      {user.role === "jobSeeker" && (
                         <Link
                           to="/profile"
                           className="flex items-center gap-2 text-sm hover:text-skyBlue"
@@ -165,6 +185,9 @@ const Navbar = () => {
                 <Button variant="link" className="text-aliceBlue">
                   <Link to="/my-jobs">Jobs</Link>
                 </Button>
+                <Button variant="link" className="text-aliceBlue">
+                  <Link to="/chat">Career Chat</Link>
+                </Button>
               </>
             ) : (
               <>
@@ -176,6 +199,9 @@ const Navbar = () => {
                 </Button>
                 <Button variant="link" className="text-aliceBlue">
                   <Link to="/browse">Browse</Link>
+                </Button>
+                <Button variant="link" className="text-aliceBlue">
+                  <Link to="/chat">Career Chat</Link>
                 </Button>
               </>
             )}
@@ -228,7 +254,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex flex-col mt-5 ml-4">
-                  {user && user.role === "jobSeeker" && (
+                  {user.role === "jobSeeker" && (
                     <div className="flex items-center w-fit cursor-pointer">
                       <UserRound />
                       <Button variant="link">
@@ -250,7 +276,7 @@ const Navbar = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

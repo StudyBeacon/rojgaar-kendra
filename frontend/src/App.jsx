@@ -1,19 +1,27 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import "./App.css"
-import Home from "./components/Home"
-import Login from "./components/auth/Login"
-import Register from "./components/auth/Register"
-import Jobs from "./components/Jobs"
-import Browse from "./components/Browse"
-import Profile from "./components/Profile"
-import JobDescription from "./components/JobDescription"
-import Companies from "./components/recruiter/Companies"
-import CompanyCreate from "./components/recruiter/CompanyCreate"
-import CompanyProfile from "./components/recruiter/CompanyProfile"
-import MyJobs from "./components/recruiter/MyJobs"
-import PostJob from "./components/recruiter/PostJob"
-import Applicants from "./components/recruiter/Applicants"
-import ProtectedRoute from "./components/recruiter/ProtectedRoute"
+// src/App.jsx
+
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./App.css";
+
+import Home from "./components/Home";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
+import Jobs from "./components/Jobs";
+import Browse from "./components/Browse";
+import Profile from "./components/Profile";
+import JobDescription from "./components/JobDescription";
+
+import Companies from "./components/recruiter/Companies";
+import CompanyCreate from "./components/recruiter/CompanyCreate";
+import CompanyProfile from "./components/recruiter/CompanyProfile";
+import MyJobs from "./components/recruiter/MyJobs";
+import PostJob from "./components/recruiter/PostJob";
+import Applicants from "./components/recruiter/Applicants";
+import ProtectedRoute from "./components/recruiter/ProtectedRoute";
+
+// Import your chat component
+import CareerChat from "./components/CareerChat";
 
 const appRouter = createBrowserRouter([
   {
@@ -44,11 +52,13 @@ const appRouter = createBrowserRouter([
     path: "/profile",
     element: <Profile />,
   },
+
+  // Recruiter-protected routes
   {
     path: "/my-companies",
     element: (
       <ProtectedRoute>
-        <Companies />,
+        <Companies />
       </ProtectedRoute>
     ),
   },
@@ -56,7 +66,7 @@ const appRouter = createBrowserRouter([
     path: "/register-company",
     element: (
       <ProtectedRoute>
-        <CompanyCreate />,
+        <CompanyCreate />
       </ProtectedRoute>
     ),
   },
@@ -92,14 +102,20 @@ const appRouter = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
-])
+
+  // Frontend career coach chat route
+  {
+    path: "/chat",
+    element: <CareerChat />,
+  },
+]);
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <RouterProvider router={appRouter} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

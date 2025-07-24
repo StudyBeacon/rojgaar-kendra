@@ -1,0 +1,110 @@
+:root {
+  --darkBlue: #0B1B2B;
+  --aliceBlue: #F0F8FF;
+  --skyBlue: #38BDF8;
+  --muted: #6B7280;
+}
+
+.career-chat {
+  max-width: 500px;
+  margin: 2rem auto;
+  font-family: "Inter", sans-serif;
+  color: var(--aliceBlue);
+}
+
+.career-chat h2 {
+  margin-bottom: 1rem;
+  color: var(--skyBlue);
+  text-align: center;
+}
+
+.career-chat .topic-select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  background: var(--darkBlue);
+  border: 1px solid var(--aliceBlue);
+  border-radius: 0.25rem;
+  color: var(--aliceBlue);
+}
+
+.career-chat .chat-window {
+  background: var(--darkBlue);
+  border: 1px solid var(--skyBlue);
+  border-radius: 0.5rem;
+  min-height: 300px;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.career-chat .msg-user,
+.career-chat .msg-bot {
+  margin: 0.5rem 0;
+  display: flex;
+}
+
+.career-chat .msg-user {
+  justify-content: flex-end;
+}
+
+.career-chat .msg-user span {
+  background: var(--skyBlue);
+  color: var(--darkBlue);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem 1rem 0 1rem;
+  max-width: 80%;
+}
+
+.career-chat .msg-bot {
+  justify-content: flex-start;
+}
+
+.career-chat .msg-bot span {
+  background: var(--aliceBlue);
+  color: var(--darkBlue);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem 1rem 1rem 0;
+  max-width: 80%;
+}
+
+.career-chat .typing {
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+.career-chat .input-area {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.career-chat .input-area input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--aliceBlue);
+  border-radius: 0.25rem;
+  background: var(--darkBlue);
+  color: var(--aliceBlue);
+}
+
+.career-chat .input-area button {
+  background: var(--skyBlue);
+  color: var(--darkBlue);
+  border: none;
+  padding: 0 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.career-chat .input-area button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+/* src/index.css or App.css */
+body {
+  background: 
+    url("/patterns/dots.svg") center/200px,
+    linear-gradient(135deg, #0B1B2B, #12223C);
+  min-height: 100vh;
+  margin: 0;
+}
